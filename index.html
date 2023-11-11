@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library System</title>
+    <link rel="stylesheet" type="text/css" href="/stat/style.css">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+</head>
+<body>
+    <h1>Welcome to the Library System</h1>
+
+    <!-- Add Book Form -->
+    <section id="add-book">
+        <h2>Add a Book</h2>
+        <form id="add-book-form" action="/add-book" method="POST">
+            <label for="Book_ID">Book ID:</label>
+            <input type="text" id="Book_ID" name="Book_ID" required><br>
+
+            <label for="Book_Name">Book Name:</label>
+            <input type="text" id="Book_Name" name="Book_Name" required><br>
+
+            <label for="Author_Name">Author Name:</label>
+            <input type="text" id="Author_Name" name="Author_Name" required><br>
+
+            <label for="Quantity">Quantity:</label>
+            <input type="number" id="Quantity" name="Quantity" required><br>
+
+            <input type="submit" value="Add Book">
+        </form>
+    </section>
+    <div id="feedback">
+        <div id="success-message" style="color: green;"></div>
+        <div id="error-message" style="color: red;"></div>
+    </div>
+
+    <!-- Borrow Book Form -->
+    <section id="borrow-book">
+        <h2>Borrow a Book</h2>
+        <form id="borrow-book-form" action="/borrow-book" method="POST">
+            <label for="student_id">Student ID:</label>
+            <input type="number" id="student_id" name="student_id" required><br>
+
+            <label for="book_name">Book Name:</label>
+            <input type="text" id="book_name" name="book_name" required><br>
+
+            <label for="borrow_date">Borrow Date:</label>
+            <input type="date" id="borrow_date" name="borrow_date" required><br>
+
+            <label for="due_date">Due Date:</label>
+            <input type="date" id="due_date" name="due_date" required><br>
+
+            <input type="submit" value="Borrow Book">
+        </form>
+    </section>
+    <script src="/stat/script.js"></script>
+</body>
+</html>

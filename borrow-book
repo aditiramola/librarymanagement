@@ -1,0 +1,33 @@
+from flask import Flask, render_template, request, redirect, url_for
+import mysql.connector
+
+app=Flask(__name__)
+
+@app.route('/borrow-book', methods=['POST'])
+def borrow_book():
+    if request.method == 'POST':
+        student_id = int(request.form.get('student_id'))
+        book_name = request.form.get('book_name')
+        borrow_date = request.form.get('borrow_date')
+        due_date = request.form.get('due_date')
+
+        connection = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="Vasundhara@403",
+            database="management"
+        )
+        cursor = connection.cursor()
+
+        try:
+            cursor.execute("INSERT INTO Currently_Borrowed (Student_ID, Book_ID, Borrow_Date, Due_Date) "
+                           "VALUES (%s, (SELECT Book_ID FROM Books WHERE Book_Name = %s), %s, %s)",
+                           (student_id, book_name, borrow_date, due_date))
+            connection.commit()
+        except Exception as e:
+            print("Error:", str(e))
+        finally:
+            connection.close()
+
+    return redirect(url_for('index'))
+

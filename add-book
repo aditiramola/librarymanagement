@@ -1,0 +1,55 @@
+from flask import Flask, render_template, request, redirect, url_for
+import mysql.connector
+
+app = Flask(__name__)
+
+@app.route('/books', methods=['GET', 'POST'])
+def index():
+    # Display library status (you can customize this)
+    connection = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="Vasundhara@403",
+        database="management"
+    )
+    cursor = connection.cursor()
+
+    # Query the Books table to display available books
+    cursor.execute("SELECT Book_Name, Author_Name, Quantity FROM Books")
+    books = cursor.fetchall()
+
+    # Query the Currently_Borrowed table to display borrowed books
+    cursor.execute("SELECT B.Book_Name, B.Author_Name, C.Borrow_Date, C.Due_Date FROM Currently_Borrowed C, Books B WHERE C.Book_ID = B.Book_ID")
+    borrowed_books = cursor.fetchall()
+
+    connection.close()
+
+    return render_template('index.html', books=books, borrowed_books=borrowed_books)
+
+@app.route('/add-book', methods=['POST'])
+def add_book():
+    if request.method == 'POST':
+        book_name = request.form.get('book_name')
+        author_name = request.form.get('author_name')
+        quantity = int(request.form.get('quantity'))
+
+        connection = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="Vasundhara@403",
+            database="management"
+        )
+        cursor = connection.cursor()
+
+        try:
+            cursor.execute("INSERT INTO Books (Book_Name, Author_Name, Quantity) VALUES (%s, %s, %s)",
+                           (book_name, author_name, quantity))
+            connection.commit()
+        except Exception as e:
+            print("Error:", str(e))
+        finally:
+            connection.close()
+
+    return redirect(url_for('index'))
+if __name__ == '__main__':
+    app.run(debug=True,port=5500)
