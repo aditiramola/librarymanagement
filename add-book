@@ -50,6 +50,6 @@ def add_book():
         finally:
             connection.close()
 
-    return redirect(url_for('index'))
+    return redirect(url_for('index.html'))
 if __name__ == '__main__':
     app.run(debug=True,port=5500)
