@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
       quantity: parseInt(formData.get("Quantity"))
     };
   
-    fetch('http://127.0.0.1:5500/add-book', {
+    fetch('/add-book', {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
